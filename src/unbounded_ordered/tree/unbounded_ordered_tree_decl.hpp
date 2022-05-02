@@ -11,7 +11,15 @@
 #define THROW_ERROR_OOB_ITERATOR throw std::out_of_range("The iterator is out of bounds.")
 #define THROW_ERROR_UNKNOWN_STATUS throw std::out_of_range("The iterator is in an unknown status.")
 
+#ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
+#include <boost/stacktrace.hpp>
+#endif // UNBOUNDED_ORDERED_TREE_TEST_TRACE
+
 namespace unbounded_ordered {
+#ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
+  extern std::map<void*, std::string> tree_allocation_debug_stacktrace;
+#endif // UNBOUNDED_ORDERED_TREE_TEST_TRACE
+
   template <typename T>
   class tree {
   protected:
@@ -411,6 +419,19 @@ namespace unbounded_ordered {
     friend class iterator_t;
 
     friend std::ostream& operator<<(std::ostream&, const tree<T>&);
+
+#ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
+    void* operator new(size_t s) {
+      void* p = malloc(s);
+      tree_allocation_debug_stacktrace[p] = boost::stacktrace::to_string( boost::stacktrace::stacktrace() );
+      return p;
+    }
+
+    void operator delete(void* p) {
+      free(p);
+      tree_allocation_debug_stacktrace.erase(p);
+    }
+#endif // UNBOUNDED_ORDERED_TREE_TEST_TRACE
   };
 }
 

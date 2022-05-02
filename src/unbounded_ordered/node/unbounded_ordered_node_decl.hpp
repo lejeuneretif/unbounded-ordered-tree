@@ -10,14 +10,14 @@
 #include <string>
 #include <typeinfo>
 
-#ifdef TEST_TRACE
+#ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
 #include <boost/stacktrace.hpp>
-#endif
+#endif // UNBOUNDED_ORDERED_TREE_TEST_TRACE
 
 namespace unbounded_ordered {
-#ifdef TEST_TRACE
-  extern std::map<void*, std::string> debug_stacktrace;
-#endif
+#ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
+  extern std::map<void*, std::string> node_allocation_debug_stacktrace;
+#endif // UNBOUNDED_ORDERED_TREE_TEST_TRACE
 
   template <typename T>
   class node {
@@ -158,18 +158,18 @@ namespace unbounded_ordered {
     template<typename U, typename Context>
     node<U>* morphism(U (*fun)(Context&, const T&, const std::list<U>&), Context& context) const;
 
-    #ifdef TEST_TRACE
+#ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
     void* operator new(size_t s) {
       void* p = malloc(s);
-      debug_stacktrace[p] = boost::stacktrace::to_string( boost::stacktrace::stacktrace() );
+      node_allocation_debug_stacktrace[p] = boost::stacktrace::to_string( boost::stacktrace::stacktrace() );
       return p;
     }
 
     void operator delete(void* p) {
       free(p);
-      debug_stacktrace.erase(p);
+      node_allocation_debug_stacktrace.erase(p);
     }
-    #endif
+#endif // UNBOUNDED_ORDERED_TREE_TEST_TRACE
   };
 }
 
