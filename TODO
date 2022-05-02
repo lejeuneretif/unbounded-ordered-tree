@@ -1,0 +1,46 @@
+- Migrate to libboost test.
+  - using https://www.boost.org/doc/libs/1_44_0/libs/test/doc/html/utf/user-guide/fixture/test-suite-shared.html
+  - using custom operator new and delete
+  - boost can print current call stack, see https://www.boost.org/doc/libs/1_66_0/doc/html/stacktrace/getting_started.html#stacktrace.getting_started.how_to_print_current_call_stack
+
+- Unit-tests should cover all the methods and cases.
+
+- Thin node unit-tests using node pointers.
+  - Verification of the structure after operation on the node.
+  - Idea: development by contract, the unit-test instanciates the contract.
+  - cover edge-cases.
+
+- Consider migrating node<T>::copy_subtree to using XML iterator.
+
+- Migrate node methods to traversals:
+  - print
+
+- Add for-in support.
+  - One possibility is: some_tree.dfs_preorder gives an object which has only the dfs_preorder iterator.
+
+- Overload is_subtree_equal so that the maps computed can be of any type, given a translator from node<T>* to the other type:
+  - Consider using the default no-op translator from node<T>* to node<T>*.
+  - this is used by tree which will pass translator from node<T>* to iterators.
+
+- Include memory leak check in unit-tests.
+  - Consider using http://goog-perftools.sourceforge.net/doc/tcmalloc.html
+
+- Implement iterators:
+  - at constant depth,
+  - on children of a node.
+
+- Use allocators for tree and node. Allocator on the underlying type T, which node<T> transforms into an allocator on itself.
+    => Look into the STL source code.
+
+- Implement different tree ctors. Can add node ctors. From list, vector, etc.
+
+- Add methods to insert a value or a subtree, move a subtree,
+    between node (represented as iterator) and its parent, previous/next sibling, first/last child, nth child.
+
+- Add method calculating the isomorphism:
+    calculate 2 maps on iterators, returns true if trees are isomorphic.
+    the isomorphism is calculated by 2 local maps, then these maps are added to the maps passed to the method.
+
+- Operations on subtree: copy subtree.
+
+- Implement isomorphism.
