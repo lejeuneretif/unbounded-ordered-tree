@@ -14,6 +14,8 @@ BOOST_AUTO_TEST_CASE( internal_consistency_restricted_to_root ) {
   nodeint* root = new nodeint(0);
   
   BOOST_CHECK(root->is_subtree_consistent());
+
+  root->delete_subtree();
 }
 
 BOOST_AUTO_TEST_CASE( internal_consistency_initializer_list ) {
@@ -22,12 +24,16 @@ BOOST_AUTO_TEST_CASE( internal_consistency_initializer_list ) {
       new nodeint(8, {new nodeint(9)})})});
   
   BOOST_CHECK(node->is_subtree_consistent());
+
+  node->delete_subtree();
 }
 
 BOOST_AUTO_TEST_CASE( internal_consistency_empty_initializer_list ) {
   nodeint* node = new nodeint(5, {});
   
   BOOST_CHECK(node->is_subtree_consistent());
+
+  node->delete_subtree();
 }
 
 BOOST_AUTO_TEST_CASE( internal_consistency_list ) {
@@ -47,12 +53,16 @@ BOOST_AUTO_TEST_CASE( internal_consistency_list ) {
   }));
   
   BOOST_CHECK(node->is_subtree_consistent());
+
+  node->delete_subtree();
 }
 
 BOOST_AUTO_TEST_CASE( internal_consistency_empty_list ) {
   nodeint* node = new nodeint(5, std::list<nodeint*>());
   
   BOOST_CHECK(node->is_subtree_consistent());
+
+  node->delete_subtree();
 }
 
 BOOST_AUTO_TEST_CASE( internal_consistency_insert_first_child ) {

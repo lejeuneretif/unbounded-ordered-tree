@@ -11,13 +11,12 @@
 #include <typeinfo>
 
 #ifdef TEST_TRACE
-#include <boost/stacktrace/stacktrace.hpp>
+#include <boost/stacktrace.hpp>
 #endif
 
 namespace unbounded_ordered {
 #ifdef TEST_TRACE
-  static long mem_used = 0;
-  static std::map<void*, std::string> debug_stacktrace;
+  extern std::map<void*, std::string> debug_stacktrace;
 #endif
 
   template <typename T>
@@ -161,20 +160,14 @@ namespace unbounded_ordered {
 
     #ifdef TEST_TRACE
     void* operator new(size_t s) {
-      ++mem_used;
       void* p = malloc(s);
-      // std::cout << "New node " << typeid(T).name() << " at " << p << std::endl;
-      // std::stringstream ss;
-      // ss << boost::stacktrace::stacktrace();
-      // debug_stacktrace[p] = ss.str();
+      debug_stacktrace[p] = boost::stacktrace::to_string( boost::stacktrace::stacktrace() );
       return p;
     }
 
     void operator delete(void* p) {
-      // std::cout << "Delete node " << typeid(T).name() << " at " << p << std::endl;
-      --mem_used;
-      // debug_stacktrace.erase(p);
       free(p);
+      debug_stacktrace.erase(p);
     }
     #endif
   };

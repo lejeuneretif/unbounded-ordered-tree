@@ -19,6 +19,12 @@ unit_test_SOURCES = unit-tests.cpp \
   tree/tree_subtree_insert_test.cpp \
   tree/tree_traversal_test.cpp
 
-unit_test_CXXFLAGS = -g $(TEST_FLAGS) -Iunbounded_ordered -Iboost \
-                      -DBOOST_TEST_NO_MAIN -DBOOST_TEST_ALTERNATIVE_INIT_API -DBOOST_STACKTRACE_LINK
-unit_test_LDADD = -lboost_unit_test_framework
+unit_test_CXXFLAGS = -g -ggdb -no-pie -fno-pie -rdynamic -fno-omit-frame-pointer \
+                      $(TEST_FLAGS) \
+                      -Iunbounded_ordered \
+                      -Iboost \
+                      -DBOOST_TEST_NO_MAIN -DBOOST_TEST_ALTERNATIVE_INIT_API \
+                      -DBOOST_STACKTRACE_LINK -DBOOST_STACKTRACE_USE_ADDR2LINE -DBOOST_STACKTRACE_USE_BACKTRACE
+
+unit_test_LDADD = -lboost_unit_test_framework \
+                  -lboost_stacktrace_backtrace -lboost_stacktrace_addr2line -lboost_stacktrace_basic -lbacktrace -ldl

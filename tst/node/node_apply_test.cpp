@@ -53,6 +53,7 @@ struct NodeApplyFixture {
 
   ~NodeApplyFixture() {
     nodea[0]->delete_subtree();
+    nodeb[0]->delete_subtree();
   }
 };
 
@@ -70,6 +71,8 @@ BOOST_AUTO_TEST_CASE( morphism_no_context ) {
   nodestr* result = nodea[0]->morphism<std::string>(&NodeApplyFixture::concat);
 
   BOOST_CHECK(nodeb[0]->is_subtree_equal(result));
+
+  result->delete_subtree();
 }
 
 BOOST_AUTO_TEST_SUITE_END()
