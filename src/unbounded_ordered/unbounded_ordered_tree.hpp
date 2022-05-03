@@ -42,6 +42,9 @@
 #include "unbounded_ordered/tree/iterator/xml/xml_reverse_iterator.tpp"
 #include "unbounded_ordered/tree/iterator/xml/xml_const_reverse_iterator.tpp"
 
+#include "unbounded_ordered/tree/ranged_loop/unbounded_ordered_tree_ranged_loop_t.tpp"
+#include "unbounded_ordered/tree/ranged_loop/unbounded_ordered_tree_ranged_loop_bfs.tpp"
+
 #include "unbounded_ordered/tree/subtree/unbounded_ordered_tree_subtree_copy.tpp"
 #include "unbounded_ordered/tree/subtree/unbounded_ordered_tree_subtree_detach.tpp"
 #include "unbounded_ordered/tree/subtree/unbounded_ordered_tree_subtree_insert.tpp"

@@ -14,6 +14,7 @@ unit_test_SOURCES = unit-tests.cpp \
   \
   tree/tree_change_data_test.cpp \
   tree/tree_iterator_cast_test.cpp \
+  tree/tree_ranged_loop_test.cpp \
   tree/tree_subtree_copy_test.cpp \
   tree/tree_subtree_detach_test.cpp \
   tree/tree_subtree_insert_test.cpp \

@@ -2,6 +2,7 @@
 #define UNBOUNDED_ORDERED_TREE_DECL_HPP
 
 #include "unbounded_ordered/node/unbounded_ordered_node.hpp"
+#include "ranged_loop/unbounded_ordered_tree_ranged_loop_decl.hpp"
 #include <initializer_list>
 #include <iostream>
 #include <stdexcept>
@@ -100,6 +101,9 @@ namespace unbounded_ordered {
     }
     inline bfs_iterator bfs_after_end() const {
       return bfs_iterator::after_end(_root);
+    }
+    tree_ranged_loop_bfs<T> bfs() const {
+      return tree_ranged_loop_bfs<T>(*this);
     }
 
     // BFS const iterator
@@ -418,7 +422,14 @@ namespace unbounded_ordered {
     template <typename T_value>
     friend class iterator_t;
 
-    friend std::ostream& operator<<(std::ostream&, const tree<T>&);
+    template <typename T_friend>
+    friend class tree_ranged_loop_t;
+
+    template <typename T_friend>
+    friend class tree_ranged_loop_bfs;
+
+    template <typename T_friend>
+    friend std::ostream& operator<<(std::ostream&, const tree<T_friend>&);
 
 #ifdef UNBOUNDED_ORDERED_TREE_TEST_TRACE
     void* operator new(size_t s) {

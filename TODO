@@ -1,7 +1,4 @@
-- Migrate to libboost test.
-  - using https://www.boost.org/doc/libs/1_44_0/libs/test/doc/html/utf/user-guide/fixture/test-suite-shared.html
-  - using custom operator new and delete
-  - boost can print current call stack, see https://www.boost.org/doc/libs/1_66_0/doc/html/stacktrace/getting_started.html#stacktrace.getting_started.how_to_print_current_call_stack
+- Add noexcept to signature of methods which return iterators.
 
 - Unit-tests should cover all the methods and cases.
 
