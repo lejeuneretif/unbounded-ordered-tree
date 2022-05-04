@@ -49,7 +49,7 @@ namespace unbounded_ordered {
     node<T>* new_root = node<T>::copy_subtree(other._root);
 
     // Delete the tree currently rooted at _root
-    node<T>::delete_subtree(&_root);
+    _root->delete_subtree();
 
     // Define the new root at the current tree
     _root = new_root;
@@ -61,7 +61,7 @@ namespace unbounded_ordered {
   template <typename T>
   tree<T>& tree<T>::operator=(tree&& other) {
     // Delete the tree currently rooted at _root
-    node<T>::delete_subtree(&_root);
+    _root->delete_subtree();
 
     _root = other._root;
     other._root = nullptr;
