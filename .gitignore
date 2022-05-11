@@ -3,3 +3,18 @@ bak
 build
 
 .vscode
+
+aux/*.m4 
+aux/autom4te.cache/*
+aux/config.*
+aux/configure
+aux/depcomp
+aux/.deps/*
+aux/install-sh
+aux/Makefile
+aux/Makefile.in
+aux/missing
+aux/stamp-h1
+aux/run*
+
+.DS_Store
