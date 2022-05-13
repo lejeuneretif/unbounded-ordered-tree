@@ -1,3 +1,9 @@
+- Examine move semantics on insert methods (insert at root, insert at iterator):
+  - https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2027.html
+  - std::forward ?
+  - in test, define variable first then pass it, with move semantics.
+  - overload.
+
 - Add noexcept to signature of methods which return iterators.
 
 - Unit-tests should cover all the methods and cases.

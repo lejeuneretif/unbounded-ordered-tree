@@ -6,12 +6,14 @@ class Item {
     int _a;
     Item* _next;
   
-    Item(int a): _a( a ), _next( nullptr ) {
+    Item(int a, Item* next = nullptr): _a( a ), _next( next ) {
       std::cout << _a << " -> new " << this << std::endl;
     }
 
     Item* copy() const {
-      Item* result = new Item(_a);
+      Item* next = _next? _next->copy() : nullptr;
+
+      Item* result = new Item(_a, next);
 
       return result;
     }
@@ -43,15 +45,37 @@ class Container {
     Container(): _value(nullptr) {}
     Container(int a) { _value = new Item(a); }
 
-    // Copy assignment
-    /*
-    Container& operator=(const Container& other) {
-      ;
+    Container(const Container& other) : _value(other._value->copy()) {}
+
+    Container(Container&& other) : _value(other._value) {
+      other._value = nullptr;
     }
-    */
+
+    // Copy assignment
+    Container& operator=(const Container& other) {
+      if(this == &other) {
+        return *this;
+      }
+
+      Item* copy = other._value->copy();
+
+      delete _value;
+
+      _value = copy;
+
+      return *this;
+    }
 
     // Move assignment operator
-    // Container& operator=(Container&&);
+    Container& operator=(Container&& other) {
+      Item* tmp = _value;
+
+      _value = other._value;
+
+      delete tmp;
+
+      return *this;
+    }
 
     ~Container() { if(_value) delete _value; }
 
@@ -97,7 +121,7 @@ void print_item(Container& c) {
 }
 
 int main(int argc, char** argv) {
-  Container c = Container(0).append(Container(1));
+  Container c = Container(0).append(Container(1)).append(Container(2));
 
   print_item(c);
   print(c);
