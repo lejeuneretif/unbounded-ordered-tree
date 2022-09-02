@@ -60,7 +60,22 @@ namespace unbounded_ordered {
 
     bool is_empty() const;
 
-    void insert_first_child(const tree&);
+    // BEGIN Exceptions
+    class insert_in_empty_tree : public std::exception {
+      const char* what() const throw() {
+        return "Cannot insert in empty tree.";
+      }
+    };
+    // END Exceptions
+
+    // BEGIN Operations on the root with move semantics
+  private:
+    tree& insert_subtree_root(tree&, void (node<T>::*)(node<T>*));
+
+  public:
+    tree& insert_first_child(tree&);
+    tree& insert_last_child(tree&);
+    // END Operations on the root with move semantics
 
     // BEGIN General iterators
     enum TreeLastMovement {

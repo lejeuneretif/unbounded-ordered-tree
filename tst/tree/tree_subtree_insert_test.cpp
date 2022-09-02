@@ -10,6 +10,31 @@ struct TreeSubtreeInsertTest {
 
 BOOST_FIXTURE_TEST_SUITE( tree_subtree_insert_suite, TreeSubtreeInsertTest )
 
+BOOST_AUTO_TEST_CASE( insert_first_child_local_variable_root_only ) {
+  treeint t = treeint(1);
+
+  treeint t2 = treeint(2);
+
+  t.insert_first_child(t2);
+
+  treeint expected = treeint(1, {treeint(2)});
+
+  BOOST_CHECK(treeint::assert_isomorphic(expected, t));
+  BOOST_CHECK(t2.is_empty());
+}
+
+/*
+BOOST_AUTO_TEST_CASE( insert_last_child_root_only ) {
+  treeint t = treeint(1);
+
+  t.insert_last_child(treeint(2));
+
+  treeint expected = treeint(1, {treeint(2)});
+
+  BOOST_CHECK(treeint::assert_isomorphic(expected, t));
+}
+*/
+
 BOOST_AUTO_TEST_CASE( insert_previous_sibling ) {
   treeint* tree = new treeint(5, {
     treeint(6, {

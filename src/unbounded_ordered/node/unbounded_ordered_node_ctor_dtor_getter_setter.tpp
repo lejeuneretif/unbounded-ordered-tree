@@ -68,6 +68,12 @@ namespace unbounded_ordered {
   }
 // END ctors
 
+  // The dtor blanks the pointers to avoid bad access to memory once the nodes are deleted.
+  template <typename T>
+  node<T>::~node() {
+    _parent = _previous_sibling = _next_sibling = _first_child = _last_child = nullptr;
+  }
+
 // BEGIN getter setter
   template <typename T>
   const T& node<T>::get_data() const { return _data; }
@@ -102,12 +108,6 @@ namespace unbounded_ordered {
   template <typename T>
   void node<T>::set_data(const T& data) { _data = data; }
 // END getter setter
-
-  // The dtor blanks the pointers to avoid bad access to memory once the nodes are deleted.
-  template <typename T>
-  node<T>::~node() {
-    _parent = _previous_sibling = _next_sibling = _first_child = _last_child = nullptr;
-  }
 }
 
 #endif // UNBOUNDED_ORDERED_NODE_CTOR_TPP

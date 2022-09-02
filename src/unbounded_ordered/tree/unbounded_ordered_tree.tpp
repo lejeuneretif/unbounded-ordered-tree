@@ -89,10 +89,33 @@ namespace unbounded_ordered {
   template <typename T>
   bool tree<T>::is_empty() const { return !_root; }
 
+  // BEGIN Operations with move semantics
   template <typename T>
-  void tree<T>::insert_first_child(const tree& new_first_child) {
-    _root->insert_first_child(node<T>::copy_subtree(new_first_child._root));
+  tree<T>& tree<T>::insert_subtree_root(tree<T>& t, void (node<T>::*insert)(node<T>*)) {
+    if(! _root) throw insert_in_empty_tree();
+
+    std::cout << "Blop" << std::endl;
+
+    if(t._root) {
+      std::cout << t._root << std::endl;
+      (_root->*insert)(t._root);
+    }
+
+    t._root = nullptr;
+
+    return *this;
   }
+
+  template <typename T>
+  tree<T>& tree<T>::insert_first_child(tree<T>& new_first_child) {
+    return insert_subtree_root(new_first_child, &node<T>::insert_first_child);
+  }
+
+  template <typename T>
+  tree<T>& tree<T>::insert_last_child(tree<T>& new_last_child) {
+    return insert_subtree_root(new_last_child, &node<T>::insert_last_child);
+  }
+  // END Operations with move semantics
 
   // Used for testing that the trees are isomorphic
   template <typename T>
